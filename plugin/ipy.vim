@@ -8,15 +8,16 @@ inoremap <Plug>(IPy-Complete) <c-o>:<c-u>call IPyComplete()<cr>
 noremap <Plug>(IPy-WordObjInfo) :call IPyObjInfo(<SID>get_current_word(), 0)<cr>
 noremap <Plug>(IPy-Interrupt) :call IPyInterrupt()<cr>
 noremap <Plug>(IPy-Terminate) :call IPyTerminate()<cr>
+noremap <Plug>(IPy-VariableValue) :call IPyRun(<SID>get_current_word())<cr>
 
 " make this overrideable
 hi IPyIn ctermfg=green cterm=bold guifg=LimeGreen gui=bold
 hi IPyOut ctermfg=red cterm=bold guifg=red gui=bold
 hi IPyBold cterm=bold gui=bold
-let s:colors = ["Black", "Red", "Green", "DarkYellow", "Blue", "DarkMagenta", "#00bbdd", "LightGray",
+let s:colors = ["Black", "Red", "Green", "DarkYellow", "Magenta", "DarkMagenta", "#00bbdd", "LightGray",
              \  "Gray", "#ff4444", "LimeGreen", "Yellow", "LightBlue", "Magenta", "Cyan", "White"]
-for i in range(0,15)
-    execute "hi IPyFg".i." ctermfg=".i." guifg=".s:colors[i]
+for s:i in range(0,15)
+    execute "hi IPyFg".s:i." ctermfg=".s:i." guifg=".s:colors[s:i]
 endfor
 
 function! s:get_current_word()
@@ -47,7 +48,8 @@ if g:nvim_ipy_perform_mappings
     map <silent> <F5>           <Plug>(IPy-Run)
     imap <silent> <C-F> <Plug>(IPy-Complete)
     map <silent> <F8> <Plug>(IPy-Interrupt)
-    map <silent> <leader>? <Plug>(IPy-WordObjInfo)
+    map <silent> <space>? <Plug>(IPy-WordObjInfo)
+    nmap <silent> <space>v <Plug>(IPy-VariableValue)
     "set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)%(\ -\ %{g:ipy_status}%)
 endif
 
